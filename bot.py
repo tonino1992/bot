@@ -5,6 +5,7 @@ import json
 from telegram import Bot
 from telegram.constants import ParseMode
 
+# 🔥 NON TOCCARE — railway mette qui le variabili
 TOKEN = os.getenv("8204117648:AAHvr49PHXwcU93jMoFXW0C9bniPoDsBjWY")
 CHAT_ID = int(os.getenv("710201368"))
 
@@ -12,6 +13,7 @@ SEARCH_URL = "https://www.vinted.it/api/v2/items?order=newest_first&search_text=
 
 bot = Bot(token=TOKEN)
 
+# Carica file degli ID già inviati
 try:
     with open("items_cache.json", "r") as f:
         seen = json.load(f)
@@ -19,8 +21,8 @@ except:
     seen = []
 
 def send_item(item):
-    title = item.get("title", "")
-    price = item.get("price_with_currency", "")
+    title = item.get("title", "Senza titolo")
+    price = item.get("price_with_currency", "N/A")
     url = f"https://www.vinted.it/items/{item['id']}"
     photo = item["photo"]["url"]
 
@@ -47,17 +49,23 @@ def check_vinted():
     for item in items:
         _id = item["id"]
 
+        # Se già visto → salta
         if _id in seen:
             continue
+
+        # Se venduto → non inviare
         if item.get("is_sold", False):
             continue
 
+        # Invia su Telegram
         send_item(item)
 
+        # Aggiungi a lista ultimi 50
         seen.insert(0, _id)
         if len(seen) > 50:
             seen = seen[:50]
 
+    # Salva la cache
     with open("items_cache.json", "w") as f:
         json.dump(seen, f)
 
@@ -68,5 +76,4 @@ if __name__ == "__main__":
             check_vinted()
         except Exception as e:
             print("Errore:", e)
-
         time.sleep(60)
