@@ -1,3 +1,4 @@
+import os
 import requests
 import time
 import json
@@ -5,7 +6,7 @@ from telegram import Bot
 from telegram.constants import ParseMode
 
 TOKEN = os.getenv("8204117648:AAHvr49PHXwcU93jMoFXW0C9bniPoDsBjWY")
-CHAT_ID = int(os.getenv(710201368))
+CHAT_ID = int(os.getenv("710201368"))
 
 SEARCH_URL = "https://www.vinted.it/api/v2/items?order=newest_first&search_text=beyblade+x"
 
@@ -67,4 +68,5 @@ if __name__ == "__main__":
             check_vinted()
         except Exception as e:
             print("Errore:", e)
+
         time.sleep(60)
