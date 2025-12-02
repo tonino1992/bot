@@ -43,7 +43,47 @@ def send_item(item):
 def check_vinted():
     global seen
 
-    response = requests.get(SEARCH_URL).json()
+def check_vinted():
+    global seen
+
+    try:
+        r = requests.get(SEARCH_URL, timeout=10)
+        
+        # Se la risposta NON è JSON → salta
+        try:
+            response = r.json()
+        except:
+            print("Risposta non JSON da Vinted, skip...")
+            return
+
+        items = response.get("items", [])
+
+    except Exception as e:
+        print("Errore nella richiesta:", e)
+        return
+
+    for item in items:
+        _id = item["id"]
+
+        # Se già visto → salta
+        if _id in seen:
+            continue
+
+        # Se venduto → non inviare
+        if item.get("is_sold", False):
+            continue
+
+        # Invia su Telegram
+        send_item(item)
+
+        # Aggiungi a lista ultimi 50
+        seen.insert(0, _id)
+        if len(seen) > 50:
+            seen = seen[:50]
+
+    # Salva la cache
+    with open("items_cache.json", "w") as f:
+        json.dump(seen, f)
     items = response.get("items", [])
 
     for item in items:
@@ -77,6 +117,7 @@ if __name__ == "__main__":
         except Exception as e:
             print("Errore:", e)
         time.sleep(60)
+
 
 
 
