@@ -9,7 +9,7 @@ from telegram.constants import ParseMode
 TOKEN = "8589757816:AAEr-2b_ChchbGy3qYm_BlLt3DWiRq031bw"
 CHAT_ID = 710201368
 
-SEARCH_URL = "https://www.vinted.it/api/v2/items?order=newest_first&search_text=beyblade+x"
+SEARCH_URL = "https://www.vinted.it/api/v2/catalog/items?page=1&per_page=50&search_text=beyblade+x&order=newest_first"
 
 bot = Bot(token=TOKEN)
 
@@ -117,6 +117,7 @@ if __name__ == "__main__":
         except Exception as e:
             print("Errore:", e)
         time.sleep(60)
+
 
 
 
