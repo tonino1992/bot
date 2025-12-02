@@ -7,7 +7,7 @@ from telegram.constants import ParseMode
 
 # 🔥 NON TOCCARE — railway mette qui le variabili
 TOKEN = os.getenv("8204117648:AAHvr49PHXwcU93jMoFXW0C9bniPoDsBjWY")
-CHAT_ID = int(os.getenv("710201368"))
+CHAT_ID = 710201368
 
 SEARCH_URL = "https://www.vinted.it/api/v2/items?order=newest_first&search_text=beyblade+x"
 
@@ -77,3 +77,4 @@ if __name__ == "__main__":
         except Exception as e:
             print("Errore:", e)
         time.sleep(60)
+
