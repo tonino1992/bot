@@ -4,8 +4,8 @@ import json
 from telegram import Bot
 from telegram.constants import ParseMode
 
-TOKEN = "8204117648:AAHvr49PHXwcU93jMoFXW0C9bniPoDsBjWY"
-CHAT_ID = 710201368
+TOKEN = os.getenv("8204117648:AAHvr49PHXwcU93jMoFXW0C9bniPoDsBjWY")
+CHAT_ID = int(os.getenv(710201368))
 
 SEARCH_URL = "https://www.vinted.it/api/v2/items?order=newest_first&search_text=beyblade+x"
 
